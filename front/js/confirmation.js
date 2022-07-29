@@ -26,4 +26,5 @@ function displayOrderId(orderId) { // Créer la fonction displayOrderId qui affi
  function cleanLocalStorage() {
      const cache = window.localStorage; // Récupérer le cache localStorage
      cache.clear(); // Supprimer toutes les données du cache localStorage
+     alert("Votre panier a été vidé! Merci de votre achat!"); // Afficher un message d'alerte
  };

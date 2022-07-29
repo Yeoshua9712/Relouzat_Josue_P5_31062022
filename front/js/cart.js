@@ -1,9 +1,9 @@
-let cart = []; // Création du panier (cart) dans le localStorage via un tableau (array)[] 
+let cart = []; // Création du panier (cart) dans le localStorage via un tableau (array)[]
 
 // Récupérer les données depuis le localStorage:
 const numberOfItems = JSON.parse(localStorage.getItem("cart"));
 console.log(numberOfItems);
-// Changer item en objet (parse est l'inverse de stringify, stringify convertit un objet en chaîne de caractères, 
+// Changer item en objet (parse est l'inverse de stringify, stringify convertit un objet en chaîne de caractères,
 // parse convertit une chaîne de caractères en objet
 // c'est-à-dire qu'il change en objet au lieu de changer en string)
 
@@ -132,7 +132,6 @@ function getData() {
             }
           });
 
-          
           totalQuantity(); //Calculer la quantité totale du panier (totalQuantity)
         });
       })
@@ -200,7 +199,7 @@ function totalPriceDisplay(data) {
 
   let total = cart.reduce(
     // Création de la fonction totalPriceDisplay qui permet de calculer le prix total du panier (reduce)
-    (total, item) => total + (data.price * item.quantity),
+    (total, item) => total + data.price * item.quantity,
     0 // 0 = initialisation de la fonction
   );
 
@@ -234,65 +233,86 @@ function changeQuantity() {
       window.location.reload(); // 13: recharger la page (permet de mettre à jour la quantité)
     });
   });
-};
+}
 
 //========= Formulaire de contact =========//
-submitForm() // Appel de la fonction submitForm
+// Créer 3 fonctions pour chaque champ du formulaire, pour vérifier que les champs sont remplis
+// correctement, et retournent true ou false ses chaînes de caractères contenant l'objet body:
+function onlyLetterValidate(word) {
+  // Fonction pour vérifier que le champ est rempli avec des lettres
+  const regex_onlyLetter = /^[a-zA-Z\-é]{3,25}$/; // Expression régulière pour vérifier que le champ est rempli avec des lettres
+  return regex_onlyLetter.test(word); // Retourne true ou false
+}
+
+function addressValidate(word) {
+  // Création de la fonnction addressValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
+  const regex_address = /^[a-zA-Z0-9é\s\-\°]+$/;
+  return regex_address.test(word); // Retourne true ou false
+};
+
+function emailValidate(word) {
+  // Création de la fonnction emailValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
+  const regex_email = /^\w+@[a-zA-Z0-9_]+?\.[a-zA-Z]{2,3}$/;
+  return regex_email.test(word); // Retourne true ou false
+};
+
+submitForm(); // Appel de la fonction submitForm
 
 function submitForm() {
-  const order = document.getElementById("order"); // Récupération du formulaire
-  // Création de la fonction submitForm qui permet de soumettre le formulaire de contact (submit) et de l'envoyer à l'API
-  order.addEventListener("submit", (e) => {
+  const order = document.getElementById("order"); // Récupération du bouton de commande  (submit)
+  // Création de la fonction submit qui permet de soumettre le formulaire de contact (submit) et de l'envoyer à l'API
+  order.addEventListener("click", (e) => {
     // Ajouter un évènement submit
     e.preventDefault(); // Empêcher le comportement par défaut du formulaire
     const body = makeRequestBody(); // Création du body de la requête
-    if (cart.length === 0) //  
-      // Si le panier est vide
+    if (cart.length === 0) // Si le panier est vide
       alert(
         // Si le panier est vide, afficher un message d'alerte
         "Veuillez sélectionner un article avant de valider votre commande, merci."
       );
-    else {
-      // Si le panier n'est pas vide
       if(
-
-ifEmailIsNotValid(body.contact.email) &&
-ifFirstNameIsNotValid(body.contact.firstName) &&
-ifLastNameIsNotValid(body.contact.lastName) &&
-ifAddressIsNotValid(body.contact.address) &&
-ifCityIsNotValid(body.contact.city),
+        onlyLetterValidate(body.contact.firstName) && // Si le champ firstName est rempli avec des lettres
+        onlyLetterValidate(body.contact.lastName) && // Si le champ lastName est rempli avec des lettres
+        onlyLetterValidate(body.contact.city) && // Si le champ city est rempli avec des lettres 
+        addressValidate(body.contact.address) && // Si le champ address est rempli avec des lettres et des chiffres
+        emailValidate(body.contact.email) // Si le champ email est rempli avec des lettres et des chiffres
       ) {
 
     fetch("http://localhost:3000/api/products/order", {
       // Création de la requête fetch avec l'url de l'api
-      method: "POST", // Méthode de la requête
-      body: JSON.stringify(body), // Body de la requête
+      method: "POST", // Méthode de la requête POST (création de la commande) 
+      body: JSON.stringify(body), // Body de la requête (JSON.stringify) (convertit un objet en chaîne de caractères)
       headers: {
-        // En-têtes de la requête
+        // En-têtes de la requête (headers) (permet de définir le type de données envoyées)
         "Content-Type": "application/json", // Type de la requête (JSON) et du body (JSON) (application/json)
       },
     })
-      .then((response) => response.json()) // Récupération de la réponse
-      .then( 
+      .then((response) => response.json()) // Récupération de la réponse de la requête (JSON)
+      .then(
         (
           data // Récupération des données
         ) => {
           const orderId = data.orderId; // Récupération de l'id de la commande (data.orderId)
           window.location.href = "confirmation.html" + "?orderId=" + orderId; // Redirection vers la page de confirmation avec l'id de la commande
-          console.log(data)} // Afficher les données 
-          
-      ); 
-    });
-  } 
+          console.log(data);
+        } // Afficher les données
+      );
+    } else {
+      alert(
+        // Si le champ est vide, afficher un message d'alerte
+        "Veuillez remplir tous les champs du formulaire, merci."
+        
+      );
+      return 
+    }
+  });
 
 
   // localStorage.setItem("cart", JSON.stringify(cart)); // Stocker le tableau cart dans le localStorage (en string)
   // window.location.href = "confirmation.html"; // Rediriger vers la page confirmation.html (page de confirmation)
 
   makeRequestBody(); // Appel de la fonction makeRequestBody pour créer le body de la requête
-
-};
-
+}
 
 function makeRequestBody() {
   // Création du body de la requête fetch avec les données du panier  (makeRequestBody) et les données du formulaire
@@ -317,7 +337,7 @@ function makeRequestBody() {
   };
 
   return body; // Retourner le body de la requête fetch avec les données du panier et les données du formulaire
-};
+}
 
 getIdFromCache(); // Récupération des id des produits du panier depuis le localStorage
 
@@ -328,7 +348,7 @@ function getIdFromCache() {
   cart.map((item) => ids.push(item.id)); // Ajout des id des produits du panier dans le tableau
   console.log(ids); // Affichage des id des produits du panier  dans la console du navigateur
   return ids; // Retourner le tableau d'id des produits du panier
-};
+}
 
 ifEmailIsNotValid(); // Vérifier si l'email est valide (si l'email n'est pas valide, afficher un message d'alerte)
 ifFirstNameIsNotValid(); // Vérifier si le nom est valide (si le nom n'est pas valide, afficher un message d'alerte)
@@ -346,22 +366,22 @@ function ifFirstNameIsNotValid() {
     const firstNameError = document.getElementById("firstNameErrorMsg"); // Récupération du message d'erreur
     if (regex.test(firstName.value) === false) {
       // Si le prénom n'est pas valide (regex) alors afficher un message d'alerte
-    
+
       firstNameError.innerHTML = "Veuillez entrer un prénom valide"; // Si le prénom n'est pas valide, afficher un message d'erreur
       return false;
     } else {
       // Sinon (si le prénom est valide)
 
       firstNameError.innerHTML = ""; // Si le prénom est valide, supprimer le message d'erreur
-    };
+    }
   });
-};
+}
 
 function ifLastNameIsNotValid() {
   // Création de la fonction ifLastNameIsNotValid
   const lastName = document.getElementById("lastName"); // Récupération du nom
   lastName.addEventListener("change", (e) => {
-    console.log(e) // Affichage du nom dans la console du navigateur
+    console.log(e); // Affichage du nom dans la console du navigateur
     // Ajouter un évènement change sur le nom pour vérifier si le nom est valide
     const regex = /^[A-Za-z]{3,25}$/; // Création de la regex pour le nom (3 caractères minimum et 25 caractères maximum)
     const lastNameError = document.getElementById("lastNameErrorMsg");
@@ -373,16 +393,16 @@ function ifLastNameIsNotValid() {
       // Sinon (si le nom est valide)
 
       lastNameError.innerHTML = ""; // Si le nom est valide, supprimer le message d'erreur
-    };
+    }
   });
-};
+}
 
 function ifAddressIsNotValid() {
   // Création de la fonction ifAdressIsNotValid pour vérifier si l'adresse est valide
   const address = document.getElementById("address"); // Récupération de l'adresse
   console.log(address); //
-  
-  address.addEventListener("change", (e) => { 
+
+  address.addEventListener("change", (e) => {
     // Ajouter un évènement change sur l'adresse pour vérifier si l'adresse est valide
     console.log(e);
     // Ajouter un évènement change sur l'adresse pour vérifier si l'adresse est valide
@@ -397,9 +417,9 @@ function ifAddressIsNotValid() {
       // Sinon (si l'adresse est valide)
 
       addressError.innerHTML = ""; // Si l'adresse est valide, supprimer le message d'erreur
-    };
+    }
   });
-};
+}
 
 function ifCityIsNotValid() {
   // Création de la fonction ifCityIsNotValid pour vérifier si le nom de la ville est valide
@@ -415,15 +435,15 @@ function ifCityIsNotValid() {
       // Sinon (si la ville est valide)
 
       cityError.innerHTML = ""; // Si la ville est valide, supprimer le message d'erreur
-    };
+    }
   });
-};
+}
 
 function ifEmailIsNotValid() {
   // Création de la fonction ifEmailIsNotValid
   const email = document.getElementById("email"); // Récupération de l'email
   email.addEventListener("change", (e) => {
-    console.log(e); // Affichage de l'email 
+    console.log(e); // Affichage de l'email
     // Ajouter un évènement change sur l'email pour vérifier si l'email est valide
     const regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; // Création de la regex pour l'email (2 caractères minimum)
     // const regex = /^[\w-\.]+@([w-]+\.)+[\w-]{2,4}$/;  // Création de la regex pour vérifier si l'email est valide ou non
@@ -433,29 +453,32 @@ function ifEmailIsNotValid() {
       emailError.innerHTML = "Veuillez entrer une adresse email valide"; // Affichage du message d'erreur
       console.log(email.value); // Affichage de l'email
     } else {
-      
       // Sinon (si l'email est valide)
       emailError.innerHTML = ""; // Si l'email est valide, supprimer le message d'erreur
-    };
+    }
   });
-};
-
+}
 
 // Créer une condition pour valider ou non le formulaire en fonction des erreurs
 // permettant de valider la commande et de l'envoyer vers le serveur
 function ifFormIsValid() {
-  if (firstNameIsNotValid() === false 
-  && lastNameIsNotValid() === false 
-  && addressIsNotValid() === false 
-  && cityIsNotValid()== false 
-  && emailIsNotValid()== false) { 
-    // Si toutes les conditions sont vérifiées, alors envoyer le formulaire vers le serveur 
-    document.getElementById("order").submit(); 
-  // Si toutes les conditions sont vérifiées, alors afficher un message de confirmation
-  alert("Votre commande a été validée");
-  document.getElementById("order").disabled = false; // Si toutes les conditions sont vérifiées, alors activer le bouton de soumission
-  }else{  // Sinon, désactiver le bouton de soumission
+  if (
+    firstNameIsNotValid() === false &&
+    lastNameIsNotValid() === false &&
+    addressIsNotValid() === false &&
+    cityIsNotValid() == false &&
+    emailIsNotValid() == false
+  ) {
+    // Si toutes les conditions sont vérifiées, alors envoyer le formulaire vers le serveur
+    document.getElementById("order").submit();
+    // Si toutes les conditions sont vérifiées, alors afficher un message de confirmation
+    alert("Votre commande a été validée");
+    document.getElementById("order").disabled = false; // Si toutes les conditions sont vérifiées, alors activer le bouton de soumission
+  } else {
+    // Sinon, désactiver le bouton de soumission
     document.getElementById("order").disabled = true; // Désactiver le bouton de soumission de commande
-    alert ("Veuillez vérifier vos informations avant de soumettre votre commande s'il vous plaît");
-  };
-};
+    alert(
+      "Veuillez vérifier vos informations avant de soumettre votre commande s'il vous plaît"
+    );
+  }
+}
