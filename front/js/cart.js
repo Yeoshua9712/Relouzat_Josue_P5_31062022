@@ -258,7 +258,7 @@ function emailValidate(word) {
 
 submitForm(); // Appel de la fonction submitForm
 
-function submitForm() {
+function submitForm() { // Création de la fonction submitForm pour envoyer le formulaire et afficher un message de confirmation
   const order = document.getElementById("order"); // Récupération du bouton de commande  (submit)
   // Création de la fonction submit qui permet de soumettre le formulaire de contact (submit) et de l'envoyer à l'API
   order.addEventListener("click", (e) => {
@@ -344,7 +344,7 @@ getIdFromCache(); // Récupération des id des produits du panier depuis le loca
 function getIdFromCache() {
   // Création de la fonction getIdFromCache pour récupérer les id des produits du panier depuis le localStorage
   const cart = JSON.parse(localStorage.getItem("cart")); // Récupération du panier depuis le localStorage
-  let ids = []; // Création d'un tableau vide
+  let ids = []; // Création d'un tableau vide pour stocker les id des produits du panier
   cart.map((item) => ids.push(item.id)); // Ajout des id des produits du panier dans le tableau
   console.log(ids); // Affichage des id des produits du panier  dans la console du navigateur
   return ids; // Retourner le tableau d'id des produits du panier
