@@ -8,9 +8,9 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
   // Récupération de la réponse pour traitement:
   .then((data) => {
     // Affichage du contenu des données en console:
-    console.log(data);
+    console.table(data);
 
-    data.forEach((canape) => { // Pour chaque canapé, créer une fonction qui va ajouter le canapé au panier (cart) (canape = canapé)
+    data.forEach((canape) => { // Pour chaque canapé 
       //Insérer l'image et les caractéristiques du canapé dans le tableau ["array" en anglais] des caractéristiques;
 
       // Ponctionner dans le DOM via document.getElementById ou document.querySelector:
@@ -19,10 +19,10 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
       // Création d'éléments enfants:
 
       let childElement = document.createElement("a"); // Création d'un élément enfant "a" (lien)  pour le canapé sélectionné
-      console.log(childElement);
+      // console.log(childElement);
       // Assigner l'url du canapé à l'élément enfant (childElement)  de l'élément parent (articlesSection)
       childElement.href = `./product.html?id=${canape._id}`; 
-      console.log(childElement.href);
+      // console.log(childElement.href);
       // element.innerHTML : récupère ou définit la syntaxe HTML décrivant les descendants de l'élément.
       childElement.innerHTML = `<article><img src=${canape.imageUrl} alt=${canape.altTxt}> <!----- image du canapé ---->
         
@@ -34,7 +34,7 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
 
       articlesSection.appendChild(childElement);  // Ajouter l'élément enfant dans la section articles du DOM (section des articles)
     });
-    // addProducts(data)
+    
   });
 // Petits rappels:
 // URLSearchParams : classe qui permet de créer un objet qui va récupérer les paramètres de la requête
