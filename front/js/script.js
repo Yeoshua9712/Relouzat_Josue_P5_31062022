@@ -36,19 +36,12 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     });
     // addProducts(data)
   });
-
-//  function addProducts(data) { // Créer la fonction addProducts qui ajoute les produits au panier (cart)
-//    console.log(data);
-
-//    const imageUrl = data[0].imageUrl;  // Récupérer l'image du canapé dans l'array data
-
-//    console.log("url de l'image", imageUrl); // Afficher l'url de l'image dans la console 
-//  };
+// Petits rappels:
 // URLSearchParams : classe qui permet de créer un objet qui va récupérer les paramètres de la requête
 // DOM: Document Object Model (API)  qui permet de manipuler le DOM (HTML) de la page
 // API : Application Programming Interface (API) qui permet de manipuler les données de l'application (ex: récupérer des données)
 //localStorage: permet de stocker des données dans le navigateur
-// * Commentaire très important!*
+// * Commentaires très importants! * //
 // Code du statut du protocole HTPP:
 // Codes commençant par 1(100): indique une réponse provisoire.
 // Code commençant par 2(200): indique que la requête a été reçue, comprise et acceptée.

@@ -248,65 +248,64 @@ function addressValidate(word) {
   // Création de la fonnction addressValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
   const regex_address = /^[a-zA-Z0-9é\s\-\°]+$/;
   return regex_address.test(word); // Retourne true ou false
-};
+}
 
 function emailValidate(word) {
   // Création de la fonnction emailValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
   const regex_email = /^\w+@[a-zA-Z0-9_]+?\.[a-zA-Z]{2,3}$/;
   return regex_email.test(word); // Retourne true ou false
-};
+}
 
 submitForm(); // Appel de la fonction submitForm
 
-function submitForm() { // Création de la fonction submitForm pour envoyer le formulaire et afficher un message de confirmation
+function submitForm() {
+  // Création de la fonction submitForm pour envoyer le formulaire et afficher un message de confirmation
   const order = document.getElementById("order"); // Récupération du bouton de commande  (submit)
   // Création de la fonction submit qui permet de soumettre le formulaire de contact (submit) et de l'envoyer à l'API
   order.addEventListener("click", (e) => {
     // Ajouter un évènement submit
     e.preventDefault(); // Empêcher le comportement par défaut du formulaire
     const body = makeRequestBody(); // Création du body de la requête
-    if (cart.length === 0) // Si le panier est vide
+    if (cart.length === 0)
+      // Si le panier est vide
       alert(
         // Si le panier est vide, afficher un message d'alerte
         "Veuillez sélectionner un article avant de valider votre commande, merci."
       );
-      if(
-        onlyLetterValidate(body.contact.firstName) && // Si le champ firstName est rempli avec des lettres
-        onlyLetterValidate(body.contact.lastName) && // Si le champ lastName est rempli avec des lettres
-        onlyLetterValidate(body.contact.city) && // Si le champ city est rempli avec des lettres 
-        addressValidate(body.contact.address) && // Si le champ address est rempli avec des lettres et des chiffres
-        emailValidate(body.contact.email) // Si le champ email est rempli avec des lettres et des chiffres
-      ) {
-
-    fetch("http://localhost:3000/api/products/order", {
-      // Création de la requête fetch avec l'url de l'api
-      method: "POST", // Méthode de la requête POST (création de la commande) 
-      body: JSON.stringify(body), // Body de la requête (JSON.stringify) (convertit un objet en chaîne de caractères)
-      headers: {
-        // En-têtes de la requête (headers) (permet de définir le type de données envoyées)
-        "Content-Type": "application/json", // Type de la requête (JSON) et du body (JSON) (application/json)
-      },
-    })
-      .then((response) => response.json()) // Récupération de la réponse de la requête (JSON)
-      .then(
-        (
-          data // Récupération des données
-        ) => {
-          const orderId = data.orderId; // Récupération de l'id de la commande (data.orderId)
-          window.location.href = "confirmation.html" + "?orderId=" + orderId; // Redirection vers la page de confirmation avec l'id de la commande
-          console.log(data);
-        } // Afficher les données
-      );
+    if (
+      onlyLetterValidate(body.contact.firstName) && // Si le champ firstName est rempli avec des lettres
+      onlyLetterValidate(body.contact.lastName) && // Si le champ lastName est rempli avec des lettres
+      onlyLetterValidate(body.contact.city) && // Si le champ city est rempli avec des lettres
+      addressValidate(body.contact.address) && // Si le champ address est rempli avec des lettres et des chiffres
+      emailValidate(body.contact.email) // Si le champ email est rempli avec des lettres et des chiffres
+    ) {
+      fetch("http://localhost:3000/api/products/order", {
+        // Création de la requête fetch avec l'url de l'api
+        method: "POST", // Méthode de la requête POST (création de la commande)
+        body: JSON.stringify(body), // Body de la requête (JSON.stringify) (convertit un objet en chaîne de caractères)
+        headers: {
+          // En-têtes de la requête (headers) (permet de définir le type de données envoyées)
+          "Content-Type": "application/json", // Type de la requête (JSON) et du body (JSON) (application/json)
+        },
+      })
+        .then((response) => response.json()) // Récupération de la réponse de la requête (JSON)
+        .then(
+          (
+            data // Récupération des données
+          ) => {
+            const orderId = data.orderId; // Récupération de l'id de la commande (data.orderId)
+            window.location.href = "confirmation.html" + "?orderId=" + orderId; // Redirection vers la page de confirmation avec l'id de la commande
+            console.log(data);
+          } // Afficher les données
+        );
     } else {
       alert(
         // Si le champ est vide, afficher un message d'alerte
         "Veuillez remplir tous les champs du formulaire, merci."
-        
       );
-      return 
+      return;
     }
   });
-
 
   // localStorage.setItem("cart", JSON.stringify(cart)); // Stocker le tableau cart dans le localStorage (en string)
   // window.location.href = "confirmation.html"; // Rediriger vers la page confirmation.html (page de confirmation)
@@ -337,7 +336,7 @@ function makeRequestBody() {
   };
 
   return body; // Retourner le body de la requête fetch avec les données du panier et les données du formulaire
-}
+};
 
 getIdFromCache(); // Récupération des id des produits du panier depuis le localStorage
 
@@ -348,7 +347,7 @@ function getIdFromCache() {
   cart.map((item) => ids.push(item.id)); // Ajout des id des produits du panier dans le tableau
   console.log(ids); // Affichage des id des produits du panier  dans la console du navigateur
   return ids; // Retourner le tableau d'id des produits du panier
-}
+};
 
 ifEmailIsNotValid(); // Vérifier si l'email est valide (si l'email n'est pas valide, afficher un message d'alerte)
 ifFirstNameIsNotValid(); // Vérifier si le nom est valide (si le nom n'est pas valide, afficher un message d'alerte)
