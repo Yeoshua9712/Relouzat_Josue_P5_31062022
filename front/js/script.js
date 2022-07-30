@@ -8,7 +8,7 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
   // Récupération de la réponse pour traitement:
   .then((data) => {
     // Affichage du contenu des données en console:
-    console.table(data);
+    console.table(data); // Affiche les données de l'API dans la console sous forme de tableau
 
     data.forEach((canape) => { // Pour chaque canapé 
       //Insérer l'image et les caractéristiques du canapé dans le tableau ["array" en anglais] des caractéristiques;
