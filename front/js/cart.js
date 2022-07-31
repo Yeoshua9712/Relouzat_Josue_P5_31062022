@@ -479,5 +479,5 @@ function ifFormIsValid() {
     alert(
       "Veuillez vérifier vos informations avant de soumettre votre commande s'il vous plaît"
     );
-  }
-}
+  };
+};
