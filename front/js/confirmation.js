@@ -21,10 +21,10 @@ function displayOrderId(orderId) { // Créer la fonction displayOrderId qui affi
     
 };
 
-//========= Créer une fonction qui supprime toutes les données du localStorage =========//
+//========= Créer une fonction qui supprime toutes les données du localStorage en vue de ne pas garder de données utilisées =========//
 
  function cleanLocalStorage() {
      const cache = window.localStorage; // Récupérer le cache localStorage
      cache.clear(); // Supprimer toutes les données du cache localStorage
-     alert("Votre panier a été vidé! Merci de votre achat!"); // Afficher un message d'alerte
+    
  };

@@ -10,7 +10,7 @@ console.log(numberOfItems);
 const orderButton = document.getElementById("order"); // Récupération du bouton order
 orderButton.addEventListener("click", (e) => submitForm(e)); // Ajouter un évènement click
 
-recupItemsFromCache(cart);
+recupItemsFromCache(cart); // Appel de la fonction recupItemsFromCache pour récupérer les données depuis le localStorage
 
 // Récupérer les données depuis le localStorage
 function recupItemsFromCache() {
@@ -21,7 +21,7 @@ function recupItemsFromCache() {
   return cart; // Retourner le cart (panier)  pour pouvoir l'utiliser dans la fonction totalQuantity et totalPriceDisplay
 }
 
-getData(cart);
+getData(cart); // Appel de la fonction getData pour récupérer les données du localStorage et les afficher dans le panier
 
 // Etablir la fonction getData
 function getData() {
@@ -46,7 +46,7 @@ function getData() {
               // Si l'élément.id de l'API est similaire à l'_id de l'item du localStorage:
               let article = document.createElement("article"); // 2: création de la balise article dans le DOM
               console.log(article);
-              article.classList.add("cart__item"); // 3: création de la class cart__item
+              article.classList.add("cart__item"); // Création de la class cart__item
               article.setAttribute("data-id", element.id); // 3: création du data-id avec la methode setAttribute
               article.setAttribute("data-color", element.color); // 4: création du data-color
               cartContainer.appendChild(article); // 5: apparition de la balise article, de sa class et de ses éléments enfants
@@ -175,7 +175,7 @@ function deleteItem() {
 
 // 21 Création de la div incluant la quantité totale, mais le prix est dans le data depuis fetch
 function totalQuantity() {
-  // Création de la fonction totalQuantity
+  // Création de la fonction totalQuantity pour calculer la quantité totale du panier
   let totalQuantity = document.getElementById("totalQuantity"); // 1: récupération de la div totalQuantity
 
   console.log(totalQuantity);
@@ -183,7 +183,7 @@ function totalQuantity() {
   const total = cart.reduce(
     (total, item) => total + parseInt(item.quantity),
     0 // 0 = initialisation de la fonction
-  ); // reduce = fonction qui permet de réduire un tableau.
+  ); // reduce = fonction qui permet de réduire un tableau en un seul élément (total) (total + parseInt(item.quantity))
   // parseInt permet de convertir une chaîne de caractères en nombre (Number). Number peut aussi être utilisé ici.
 
   totalQuantity.textContent = total; // Afficher la quantité totale dans la div totalQuantity
@@ -193,13 +193,14 @@ function totalQuantity() {
 
 // 22 Ainsi que le prix total
 function totalPriceDisplay(data) {
+  // Création de la fonction totalPriceDisplay pour calculer le prix total du panier
   let totalPrice = document.getElementById("totalPrice"); // Récupération de la div totalPrice
 
   console.log(totalPrice);
 
   let total = cart.reduce(
     // Création de la fonction totalPriceDisplay qui permet de calculer le prix total du panier (reduce)
-    (total, item) => total + data.price * item.quantity,
+    (total, item) => total + data.price * item.quantity, // total + data.price * item.quantity = total + prix * quantité
     0 // 0 = initialisation de la fonction
   );
 
@@ -209,7 +210,7 @@ function totalPriceDisplay(data) {
   console.log(total);
 }
 
-// La fonction changeQuantity permet de changer la quantité d'un article:
+// La fonction changeQuantity permet de changer la quantité d'un article dans le panier:  on change la quantité dans le panier et on met à jour le localStorage
 function changeQuantity() {
   const itemQuantity = document.querySelectorAll(".itemQuantity"); // 1: récupération de l'input quantité
   itemQuantity.forEach((element, index) => {
@@ -220,6 +221,7 @@ function changeQuantity() {
       let value = e.target.value; // 5: récupération de la valeur de l'input quantité
       for (let j = 0; j < cart.length; j++) {
         // Pour chaque élément du panier (cart)
+        // dataset: récupération des données de l'élément (id et color) dans la div cart__item
         let id =
           document.getElementsByClassName("cart__item")[index].dataset.id; // 8: récupération de l'id de l'élément
         let color =
@@ -336,7 +338,7 @@ function makeRequestBody() {
   };
 
   return body; // Retourner le body de la requête fetch avec les données du panier et les données du formulaire
-};
+}
 
 getIdFromCache(); // Récupération des id des produits du panier depuis le localStorage
 
@@ -347,7 +349,7 @@ function getIdFromCache() {
   cart.map((item) => ids.push(item.id)); // Ajout des id des produits du panier dans le tableau
   console.log(ids); // Affichage des id des produits du panier  dans la console du navigateur
   return ids; // Retourner le tableau d'id des produits du panier
-};
+}
 
 ifEmailIsNotValid(); // Vérifier si l'email est valide (si l'email n'est pas valide, afficher un message d'alerte)
 ifFirstNameIsNotValid(); // Vérifier si le nom est valide (si le nom n'est pas valide, afficher un message d'alerte)
@@ -476,8 +478,6 @@ function ifFormIsValid() {
   } else {
     // Sinon, désactiver le bouton de soumission
     document.getElementById("order").disabled = true; // Désactiver le bouton de soumission de commande
-    alert(
-      "Veuillez vérifier vos informations avant de soumettre votre commande s'il vous plaît"
-    );
-  };
-};
+  
+  }
+}

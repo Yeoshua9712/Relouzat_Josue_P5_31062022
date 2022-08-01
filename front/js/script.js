@@ -52,3 +52,5 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
 // Rien ne précise si c'est temporaire, mais si c'est définitif, l'erreur 410 est préférable.
 // Code commençant par 5(500): inque que le serveur web n'a pas réussi à traiter une requête
 // pourtant valide.
+
+// 
