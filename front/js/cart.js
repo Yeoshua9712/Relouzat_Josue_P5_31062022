@@ -8,7 +8,7 @@ console.log(numberOfItems);
 // c'est-à-dire qu'il change en objet au lieu de changer en string)
 
 const orderButton = document.getElementById("order"); // Récupération du bouton order
-orderButton.addEventListener("click", (e) => submitForm(e)); // Ajouter un évènement click
+orderButton.addEventListener("click", (e) => submitForm(e)); // Ajouter un évènement click sur le bouton submit
 
 recupItemsFromCache(cart); // Appel de la fonction recupItemsFromCache pour récupérer les données depuis le localStorage
 
@@ -36,7 +36,7 @@ function getData() {
         const cartContainer = document.getElementById("cart__items"); // 1: id = cart__items
         console.log(cartContainer);
         //const cart = recupItemsFromCache(); // créer un panier à partir de la fonction "recupItemsFromCache"
-        data.forEach((item) => {
+        data.forEach((item) => { 
           console.log(item.price);
           // => Pour chaque item des données (data)
           cart.forEach((element) => {
@@ -47,7 +47,7 @@ function getData() {
               let article = document.createElement("article"); // 2: création de la balise article dans le DOM
               console.log(article);
               article.classList.add("cart__item"); // Création de la class cart__item
-              article.setAttribute("data-id", element.id); // 3: création du data-id avec la methode setAttribute
+              article.setAttribute("data-id", element.id); // 3: création du data-id avec la methode setAttribute (setAttribute permet de créer des attributs dans le DOM)
               article.setAttribute("data-color", element.color); // 4: création du data-color
               cartContainer.appendChild(article); // 5: apparition de la balise article, de sa class et de ses éléments enfants
 
@@ -137,7 +137,7 @@ function getData() {
       })
       .catch((error) => {
         // Si erreur d'appel API (catch)
-        console.log(error, { cause: error }); // Afficher l'erreur et son cause (cause) dans la console
+        console.log(error, { cause: error }); // Afficher l'erreur et son cause ({cause: error}) dans la console
       });
   } else {
     // si le panier est vide
