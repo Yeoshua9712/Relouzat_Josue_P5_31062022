@@ -13,13 +13,13 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     data.forEach((canape) => { // Pour chaque canapé [data.forEach: itération sur le tableau] (canape: variable qui va récupérer les données de l'API)
       console.log(canape); // Affiche le nom du canapé dans la console
       //Insérer l'image et les caractéristiques du canapé dans le tableau ["array" en anglais] des caractéristiques;
-      canapDisplay(canape); // Appel de la fonction canapAppear qui va afficher les données du canapé dans le DOM
+      canapDisplay(canape); // Appel de la fonction canapDisplay qui va afficher les données du canapé dans le DOM
       
     });
     
   });
 
-  function canapDisplay(canape) { // Créer la fonction canapAppear qui va afficher les données du canapé dans le DOM
+  function canapDisplay(canape) { // Créer la fonction canapDisplay qui va afficher les données du canapé dans le DOM
       
     const articlesSection = document.getElementById("items"); // Récupérer l'élément items du DOM (HTML)
     const childElement = document.createElement("a");  // Créer un élément a (lien) qui va servir de conteneur pour les données du canapé
