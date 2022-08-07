@@ -13,38 +13,40 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     data.forEach((canape) => { // Pour chaque canapé [data.forEach: itération sur le tableau] (canape: variable qui va récupérer les données de l'API)
       console.log(canape); // Affiche le nom du canapé dans la console
       //Insérer l'image et les caractéristiques du canapé dans le tableau ["array" en anglais] des caractéristiques;
-      canapAppear(canape); // Appel de la fonction canapAppear qui va afficher les données du canapé dans le DOM
-
-      function canapAppear(canape) { // Créer la fonction canapAppear qui va afficher les données du canapé dans le DOM
-
-      let articlesSection = document.getElementById("items"); // Récupérer l'élément items du DOM (HTML)
-      let childElement = document.createElement("a");  // Créer un élément a (lien) qui va servir de conteneur pour les données du canapé
-      childElement.href = `./product.html?id=${canape._id}`; // Créer un lien qui va rediriger vers la page product.html avec l'id du canapé
-      console.log(childElement);
-      articlesSection.appendChild(childElement); // Ajouter le lien dans le DOM dans la section articles
-
-      let article = document.createElement("article"); 
-      articlesSection.appendChild(article);  
-      let img = document.createElement("img"); // Créer un élément img pour afficher l'image du canapé
-      img.setAttribute("src", canape.imageUrl); // Assigner l'url de l'image du canapé à l'attribut src de l'élément img
-      article.appendChild(img); // Insérer l'image du canapé dans le DOM
-      img.setAttribute("alt", canape.altTxt) // Assigner le texte alternatif de l'image du canapé à l'attribut alt de l'élément img
-      console.log(img);
-
-      let title = document.createElement("h3"); // Créer un élément h3 pour afficher le nom du canapé
-      title.classList.add("productName"); // Ajouter la classe productName à l'élément h3
-      title.textContent = canape.name; // Assigner le nom du canapé à l'élément h3
-      article.appendChild(title); // Insérer le nom du canapé dans le DOM
-      console.log(title);
-
-      let pDescription = document.createElement("p");
-      pDescription.classList.add("productDescription"); // Ajouter la classe productDescription à l'élément p
-      pDescription.textContent = canape.description; // Assigner la description du canapé à l'élément p
-      article.appendChild(pDescription); // Insérer la description du canapé dans le DOM
-      console.log(pDescription);
-      };
+      canapDisplay(canape); // Appel de la fonction canapAppear qui va afficher les données du canapé dans le DOM
+      
     });
+    
   });
+
+  function canapDisplay(canape) { // Créer la fonction canapAppear qui va afficher les données du canapé dans le DOM
+      
+    const articlesSection = document.getElementById("items"); // Récupérer l'élément items du DOM (HTML)
+    const childElement = document.createElement("a");  // Créer un élément a (lien) qui va servir de conteneur pour les données du canapé
+    childElement.href = `./product.html?id=${canape._id}`; // Créer un lien qui va rediriger vers la page product.html avec l'id du canapé
+    console.log(childElement);
+    articlesSection.appendChild(childElement); // Ajouter le lien dans le DOM dans la section articles
+
+    const article = document.createElement("article"); 
+    articlesSection.appendChild(article);  
+    const img = document.createElement("img"); // Créer un élément img pour afficher l'image du canapé
+    img.setAttribute("src", canape.imageUrl); // Assigner l'url de l'image du canapé à l'attribut src de l'élément img
+    article.appendChild(img); // Insérer l'image du canapé dans le DOM
+    img.setAttribute("alt", canape.altTxt) // Assigner le texte alternatif de l'image du canapé à l'attribut alt de l'élément img
+    console.log(img);
+
+    const title = document.createElement("h3"); // Créer un élément h3 pour afficher le nom du canapé
+    title.classList.add("productName"); // Ajouter la classe productName à l'élément h3
+    title.textContent = canape.name; // Assigner le nom du canapé à l'élément h3
+    article.appendChild(title); // Insérer le nom du canapé dans le DOM
+    console.log(title);
+
+    const pDescription = document.createElement("p"); // Créer un élément p pour afficher la description du canapé
+    pDescription.classList.add("productDescription"); // Ajouter la classe productDescription à l'élément p
+    pDescription.textContent = canape.description; // Assigner la description du canapé à l'élément p
+    article.appendChild(pDescription); // Insérer la description du canapé dans le DOM
+    console.log(pDescription);
+    };
 
       
       // // Ponctionner dans le DOM via document.getElementById ou document.querySelector:
