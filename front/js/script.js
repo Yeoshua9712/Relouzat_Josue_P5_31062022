@@ -13,7 +13,8 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     data.forEach((canape) => { // Pour chaque canapé [data.forEach: itération sur le tableau] (canape: variable qui va récupérer les données de l'API)
       console.log(canape); // Affiche le nom du canapé dans la console
       //Insérer l'image et les caractéristiques du canapé dans le tableau ["array" en anglais] des caractéristiques;
-      canapDisplay(canape); // Appel de la fonction canapDisplay qui va afficher les données du canapé dans le DOM
+      
+    canapDisplay(canape); // Appel de la fonction canapDisplay qui va afficher les données du canapé dans le DOM
       
     });
     
@@ -28,7 +29,7 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     articlesSection.appendChild(childElement); // Ajouter le lien dans le DOM dans la section articles
 
     const article = document.createElement("article"); 
-    articlesSection.appendChild(article);  
+    childElement.appendChild(article);  
     const img = document.createElement("img"); // Créer un élément img pour afficher l'image du canapé
     img.setAttribute("src", canape.imageUrl); // Assigner l'url de l'image du canapé à l'attribut src de l'élément img
     article.appendChild(img); // Insérer l'image du canapé dans le DOM
@@ -46,9 +47,11 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     pDescription.textContent = canape.description; // Assigner la description du canapé à l'élément p
     article.appendChild(pDescription); // Insérer la description du canapé dans le DOM
     console.log(pDescription);
+    return article; // Retourner l'élément article pour pouvoir l'utiliser dans la fonction canapDisplay
+    // return: permet de retourner une valeur à une fonction et de l'utiliser dans d'autres fonctions ou autre parties du code
     };
 
-      
+      // ===================== Autre façon de faire (mais les éléments seraient affichés de façon statique)===================== //
       // // Ponctionner dans le DOM via document.getElementById ou document.querySelector:
       // let articlesSection = document.getElementById("items"); // Récupérer le container des articles
 
@@ -73,6 +76,7 @@ fetch(url, { method: "GET" }) // Créer une requête fetch qui va récupérer le
     //});
     
   //});
+
 // Petits rappels:
 // URLSearchParams : classe qui permet de créer un objet qui va récupérer les paramètres de la requête
 // DOM: Document Object Model (API)  qui permet de manipuler le DOM (HTML) de la page

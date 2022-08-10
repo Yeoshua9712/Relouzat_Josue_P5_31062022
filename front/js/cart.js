@@ -2,7 +2,7 @@ let cart = []; // Création du panier (cart) dans le localStorage via un tableau
 
 // Récupérer les données depuis le localStorage:
 const numberOfItems = JSON.parse(localStorage.getItem("cart"));
-console.log(numberOfItems);
+console.table(numberOfItems);
 // Changer item en objet (parse est l'inverse de stringify, stringify convertit un objet en chaîne de caractères,
 // parse convertit une chaîne de caractères en objet
 // c'est-à-dire qu'il change en objet au lieu de changer en string)
@@ -101,7 +101,7 @@ function getData() {
 
               // 17: Création de la balise p de quantity
               let itemQuantity = document.createElement("p");
-              itemQuantity.innerHTML = `Qté : `;
+              itemQuantity.innerHTML = `Qté : `;  // Création du p de quantity avec la valeur "Qté : "
               divSettings.appendChild(itemQuantity); // Apparition du p de quantity dans la div parent (divSettings) (cart__item__content__settings)
 
               // 18: Création du bouton (input) quantité
@@ -109,25 +109,25 @@ function getData() {
               inputQuantity.setAttribute("type", "number");
               inputQuantity.classList.add("itemQuantity"); // Création de la class itemQuantity
               inputQuantity.setAttribute("name", "itemQuantity"); // Création du name de l'input
-              inputQuantity.setAttribute("value", element.quantity);
-              inputQuantity.setAttribute("min", "1");
-              inputQuantity.setAttribute("max", "100");
+              inputQuantity.setAttribute("value", element.quantity); // Création du value de l'input (quantité)
+              inputQuantity.setAttribute("min", "1"); // Création du min de l'input (quantité)
+              inputQuantity.setAttribute("max", "100"); // Création du max de l'input (quantité)
               divSettings.appendChild(inputQuantity); // Apparition du bouton (input) quantité dans la div parent (divSettings) (cart__item__content__settings)
               console.log(inputQuantity);
               changeQuantity(); // Changer la quantité (changement de quantité)
 
               // 19: Création de la div incluant la suppession (delete)
-              let divDelete = document.createElement("div");
+              let divDelete = document.createElement("div"); // Création de la div delete
               divDelete.classList.add("cart__item__content__settings__delete");
               divSettings.appendChild(divDelete); // Apparition de la div dans la div parent (divSettings) (cart__item__content__settings)
 
               // 20 Création du bouton supprimer (delete)
-              let deleteButton = document.createElement("button");
-              deleteButton.classList.add("deleteItem");
-              deleteButton.innerHTML = "Supprimer";
+              let deleteButton = document.createElement("button"); // Création du bouton delete
+              deleteButton.classList.add("deleteItem"); // Création de la class deleteItem
+              deleteButton.innerHTML = "Supprimer"; // Création du texte du bouton (supprimer)
               divDelete.appendChild(deleteButton); // Apparition du bouton supprimer (delete) dans la div parent (divDelete) (cart__item__content__settings)
               console.log(deleteButton);
-              deleteItem(); //Supprimer l'élément
+              deleteItem(); //Supprimer l'élément du panier
               totalPriceDisplay(item); // Afficher le prix total du panier (totalPriceDisplay)
             }
           });
@@ -142,11 +142,11 @@ function getData() {
   } else {
     // si le panier est vide
     alert("Votre panier est vide"); // Afficher un message d'alerte si le panier est vide
-  }
-}
+  };
+};
 
 function deleteItem() {
-  // Supprimer un élément du panier
+  // Supprimer un élément du panier (deleteItem)
 
   let deleteButton = document.querySelectorAll(".deleteItem"); // 1: récupération du bouton delete (deleteItem)
   deleteButton.forEach((element, index) => {
@@ -165,13 +165,13 @@ function deleteItem() {
           cart.splice(index, 1); // 8: supprimer l'élément du panier à l'index correspondant (index)
         }
       });
-      localStorage.setItem("cart", JSON.stringify(cart)); // 9: mettre à jour le localStorage
+      localStorage.setItem("cart", JSON.stringify(cart)); // 9: mettre à jour le localStorage (cart) avec le nouveau panier (cart)
       location.reload(); // 10: recharger la page pour afficher le nouveau panier
-      // 11: empêcher le comportement par défaut
+      
     });
   });
   return; //  12: retourner la fonction
-}
+};
 
 // 21 Création de la div incluant la quantité totale, mais le prix est dans le data depuis fetch
 function totalQuantity() {
@@ -189,7 +189,7 @@ function totalQuantity() {
   totalQuantity.textContent = total; // Afficher la quantité totale dans la div totalQuantity
 
   console.log(cart);
-}
+};
 
 // 22 Ainsi que le prix total
 function totalPriceDisplay(data) {
@@ -208,7 +208,7 @@ function totalPriceDisplay(data) {
   // Number permet de convertir un nombre en chaîne de caractères (String).
 
   console.log(total);
-}
+};
 
 // La fonction changeQuantity permet de changer la quantité d'un article dans le panier:  on change la quantité dans le panier et on met à jour le localStorage
 function changeQuantity() {
@@ -235,7 +235,7 @@ function changeQuantity() {
       window.location.reload(); // 13: recharger la page (permet de mettre à jour la quantité)
     });
   });
-}
+};
 
 //========= Formulaire de contact =========//
 // Créer 3 fonctions pour chaque champ du formulaire, pour vérifier que les champs sont remplis
@@ -244,23 +244,23 @@ function onlyLetterValidate(word) {
   // Fonction pour vérifier que le champ est rempli avec des lettres
   const regex_onlyLetter = /^[a-zA-Z\-é]{3,25}$/; // Expression régulière pour vérifier que le champ est rempli avec des lettres
   return regex_onlyLetter.test(word); // Retourne true ou false
-}
+};
 
 function addressValidate(word) {
   // Création de la fonnction addressValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
   const regex_address = /^[a-zA-Z0-9é\s\-\°]+$/;
   return regex_address.test(word); // Retourne true ou false
-}
+};
 
 function emailValidate(word) {
   // Création de la fonnction emailValidate pour vérifier si le mot est rempli avec des lettres et des chiffres
   const regex_email = /^\w+@[a-zA-Z0-9_]+?\.[a-zA-Z]{2,3}$/;
   return regex_email.test(word); // Retourne true ou false
-}
+};
 
 submitForm(); // Appel de la fonction submitForm
 
-function submitForm() {
+function submitForm() {// Création de la fonction submitForm pour envoyer le formulaire et vérifier que les champs sont remplis correctement
   // Création de la fonction submitForm pour envoyer le formulaire et afficher un message de confirmation
   const order = document.getElementById("order"); // Récupération du bouton de commande  (submit)
   // Création de la fonction submit qui permet de soumettre le formulaire de contact (submit) et de l'envoyer à l'API
@@ -274,7 +274,7 @@ function submitForm() {
         // Si le panier est vide, afficher un message d'alerte
         "Veuillez sélectionner un article avant de valider votre commande, merci."
       );
-    if (
+    if ( // Si les champs sont remplis correctement
       onlyLetterValidate(body.contact.firstName) && // Si le champ firstName est rempli avec des lettres
       onlyLetterValidate(body.contact.lastName) && // Si le champ lastName est rempli avec des lettres
       onlyLetterValidate(body.contact.city) && // Si le champ city est rempli avec des lettres
@@ -305,7 +305,7 @@ function submitForm() {
         // Si le champ est vide, afficher un message d'alerte
         "Veuillez remplir tous les champs du formulaire, merci."
       );
-      return;
+      return; // Retourner à la page précédente (annuler la requête)
     }
   });
 
@@ -313,7 +313,7 @@ function submitForm() {
   // window.location.href = "confirmation.html"; // Rediriger vers la page confirmation.html (page de confirmation)
 
   makeRequestBody(); // Appel de la fonction makeRequestBody pour créer le body de la requête
-}
+};
 
 function makeRequestBody() {
   // Création du body de la requête fetch avec les données du panier  (makeRequestBody) et les données du formulaire
@@ -338,7 +338,7 @@ function makeRequestBody() {
   };
 
   return body; // Retourner le body de la requête fetch avec les données du panier et les données du formulaire
-}
+};
 
 getIdFromCache(); // Récupération des id des produits du panier depuis le localStorage
 
@@ -349,7 +349,7 @@ function getIdFromCache() {
   cart.map((item) => ids.push(item.id)); // Ajout des id des produits du panier dans le tableau
   console.log(ids); // Affichage des id des produits du panier  dans la console du navigateur
   return ids; // Retourner le tableau d'id des produits du panier
-}
+};
 
 ifEmailIsNotValid(); // Vérifier si l'email est valide (si l'email n'est pas valide, afficher un message d'alerte)
 ifFirstNameIsNotValid(); // Vérifier si le nom est valide (si le nom n'est pas valide, afficher un message d'alerte)
@@ -376,7 +376,7 @@ function ifFirstNameIsNotValid() {
       firstNameError.innerHTML = ""; // Si le prénom est valide, supprimer le message d'erreur
     }
   });
-}
+};
 
 function ifLastNameIsNotValid() {
   // Création de la fonction ifLastNameIsNotValid
@@ -396,7 +396,7 @@ function ifLastNameIsNotValid() {
       lastNameError.innerHTML = ""; // Si le nom est valide, supprimer le message d'erreur
     }
   });
-}
+};
 
 function ifAddressIsNotValid() {
   // Création de la fonction ifAdressIsNotValid pour vérifier si l'adresse est valide
@@ -420,7 +420,7 @@ function ifAddressIsNotValid() {
       addressError.innerHTML = ""; // Si l'adresse est valide, supprimer le message d'erreur
     }
   });
-}
+};
 
 function ifCityIsNotValid() {
   // Création de la fonction ifCityIsNotValid pour vérifier si le nom de la ville est valide
@@ -438,10 +438,10 @@ function ifCityIsNotValid() {
       cityError.innerHTML = ""; // Si la ville est valide, supprimer le message d'erreur
     }
   });
-}
+};
 
 function ifEmailIsNotValid() {
-  // Création de la fonction ifEmailIsNotValid
+  // Création de la fonction ifEmailIsNotValid pour vérifier si l'email est valide
   const email = document.getElementById("email"); // Récupération de l'email
   email.addEventListener("change", (e) => {
     console.log(e); // Affichage de l'email
@@ -458,7 +458,7 @@ function ifEmailIsNotValid() {
       emailError.innerHTML = ""; // Si l'email est valide, supprimer le message d'erreur
     }
   });
-}
+};
 
 // Créer une condition pour valider ou non le formulaire en fonction des erreurs
 // permettant de valider la commande et de l'envoyer vers le serveur
@@ -478,6 +478,6 @@ function ifFormIsValid() {
   } else {
     // Sinon, désactiver le bouton de soumission
     document.getElementById("order").disabled = true; // Désactiver le bouton de soumission de commande
-  
-  }
-}
+    
+  };
+};
